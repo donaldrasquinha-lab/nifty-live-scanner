@@ -1,7 +1,6 @@
 name: Daily Nifty 50 Key Update
 on:
   schedule:
-    # Runs at 02:30 UTC (08:00 AM IST) daily
     - cron: '30 2 * * *'
   workflow_dispatch: # Allows manual trigger for testing
 
