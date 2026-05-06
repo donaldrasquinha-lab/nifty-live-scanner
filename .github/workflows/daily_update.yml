@@ -1,4 +1,4 @@
-      - name: Run Update Script
+      name: Run Update Script
         env:
           # This connects the GitHub Secrets to your Python script
           API_KEY: ${{ secrets.UPSTOX_API_KEY }}
