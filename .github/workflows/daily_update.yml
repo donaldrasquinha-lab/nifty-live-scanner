@@ -1,35 +1,37 @@
+name: Daily Nifty Update
+
 on:
   workflow_dispatch:
   schedule:
     - cron: '30 2 * * *'
 
 jobs:
-  run-daily-task:
+  update-keys:
     runs-on: ubuntu-latest
     permissions:
       contents: write
     steps:
-      - name: Checkout Code
+      - name: Checkout Repository
         uses: actions/checkout@v4
 
-      - name: Setup Python
+      - name: Set up Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.10'
 
-      - name: Install Pandas and Requests
+      - name: Install Dependencies
         run: pip install pandas requests
 
-      - name: Execute Script
+      - name: Run Update Script
         env:
           API_KEY: ${{ secrets.UPSTOX_API_KEY }}
           API_SECRET: ${{ secrets.UPSTOX_API_SECRET }}
         run: python get_nifty_keys.py
 
-      - name: Update Repository File
+      - name: Commit and Push Changes
         run: |
-          git config --global user.name "github-actions"
-          git config --global user.email "actions@github.com"
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@://github.com"
           git add nifty50_upstox_keys.csv
-          git commit -m "Auto-update Nifty keys" || exit 0
+          git commit -m "Auto-update Nifty 50 keys" || echo "No changes to commit"
           git push
