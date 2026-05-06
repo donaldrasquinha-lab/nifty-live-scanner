@@ -1,6 +1,6 @@
 name: Run Update Script
 env:
-          # This connects the GitHub Secrets to your Python script
-          API_KEY: ${{ secrets.UPSTOX_API_KEY }}
-          API_SECRET: ${{ secrets.UPSTOX_API_SECRET }}
-        run: python get_nifty_keys.py
+ # This connects the GitHub Secrets to your Python script
+  API_KEY: ${{ secrets.UPSTOX_API_KEY }}
+  API_SECRET: ${{ secrets.UPSTOX_API_SECRET }}
+run: python get_nifty_keys.py
