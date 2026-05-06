@@ -1,0 +1,32 @@
+name: Daily Nifty 50 Key Update
+on:
+  schedule:
+    # Runs at 02:30 UTC (08:00 AM IST) daily
+    - cron: '30 2 * * *'
+  workflow_dispatch: # Allows manual trigger for testing
+
+jobs:
+  update-keys:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.10'
+
+      - name: Install Dependencies
+        run: pip install pandas requests
+
+      - name: Run Update Script
+        run: python your_script_name.py  # Replace with your actual script filename
+
+      - name: Commit and Push Changes
+        run: |
+          git config --global user.name "github-actions[bot]"
+          git config --global user.email "github-actions[bot]@users.noreply.github.com"
+          git add nifty50_upstox_keys.csv
+          git commit -m "Auto-update Nifty 50 keys for $(date +'%Y-%m-%d')" || echo "No changes to commit"
+          git push
